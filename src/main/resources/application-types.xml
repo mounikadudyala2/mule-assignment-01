@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="EmployeeXml" format="xml">
+      <types:example format="xml" element="Items" location="examples/assignment1-15.xml"/>
+    </types:type>
+    <types:type name="EmployeeCsv" format="csv">
+      <types:shape format="weave" example="examples/assignment1_res1-4.csv"><![CDATA[%dw 2.0
+
+type EmployeeCsv = Array<{|  Item: String,   ItemCode: String,   ItemName: String,   ItemDescription: String,   Price: String,   EXportValue: String,   VendorID: String|}> {"isQuotedString": "false",
+"header": "true",
+"headerLineNumber": "0"}
+
+]]></types:shape>
+      <types:properties>
+        <types:property name="headerLineNumber" value="0"/>
+        <types:property name="header" value="true"/>
+        <types:property name="isQuotedString" value="false"/>
+      </types:properties>
+    </types:type>
+    <types:type name="EmployeeCsv2" format="csv">
+      <types:shape format="weave" example="examples/assignment1_res2-3.csv"><![CDATA[%dw 2.0
+
+type EmployeeCsv2 = Array<{|  Item: String,   ItemCode: String,   ItemName: String,   ItemDescription: String,   Price: String,   EXportValue: String|}> {"isQuotedString": "false",
+"header": "true",
+"headerLineNumber": "0"}
+
+]]></types:shape>
+      <types:properties>
+        <types:property name="headerLineNumber" value="0"/>
+        <types:property name="header" value="true"/>
+        <types:property name="isQuotedString" value="false"/>
+      </types:properties>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#81a9eb6a-94b6-4650-9d43-8469b5184946">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="EmployeeXml"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="EmployeeCsv"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
